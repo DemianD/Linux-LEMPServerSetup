@@ -1,0 +1,72 @@
+# Multiple sites
+Create a site for e.g. fotocoghe.be
+
+## Create a user
+  1. sudo groupadd fotocoghe
+  2. sudo useradd -g fotocoghe fotocoghe
+  3. sudo passwd fotocoghe
+  4. sudo mkhomedir_helper fotocoghe
+
+## Create a PHP-FPM pool
+  1. cd /etc/php/7.0/fpm/pool.d
+  2. sudo nano fotocoghe.conf
+
+<pre><code>
+[fotocoghe]
+user = fotocoghe
+group = fotocoghe
+listen = /var/run/php/php7.0-fpm-fotocoghe.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+chdir = /
+</code></pre>
+
+  3. sudo service php7.0-fpm restart
+
+## Config nginx
+  1. cd /etc/nginx/sites-available
+  2. sudo nano fotocoghe
+
+<pre><code>
+server {
+    listen 443;
+
+    root /home/fotocoghe/public;
+    index index.php index.html index.htm;
+
+    server_name fotocoghe.be www.fotocoghe.be;
+
+    ssl_certificate /etc/letsencrypt/live/www.fotocoghe.be/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.fotocoghe.be/privkey.pem;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm-fotocoghe.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+
+server {
+    listen 80;
+    server_name fotocoghe.be www.fotocoghe.be;
+    return 301 https://$host$request_uri;
+}
+</code></pre>
