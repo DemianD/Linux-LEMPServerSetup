@@ -43,6 +43,7 @@ server {
 
     server_name fotocoghe.be www.fotocoghe.be;
 
+    # to do
     ssl_certificate /etc/letsencrypt/live/www.fotocoghe.be/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/www.fotocoghe.be/privkey.pem;
 
@@ -70,3 +71,6 @@ server {
     return 301 https://$host$request_uri;
 }
 </code></pre>
+
+  3. sudo ln -s /etc/nginx/sites-available/fotocoghe /etc/nginx/sites-enabled/fotocoghe
+  4. sudo service nginx restart
