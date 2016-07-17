@@ -18,3 +18,9 @@ Make a dir
 ## Obtain a certificate
   1. cd /opt/letsencrypt
   2. sudo ./letsencrypt-auto certonly -a webroot --webroot-path=/var/www/letsencrypt -d fotocoghe.be
+
+## renew
+  1. /opt/letsencrypt/letsencrypt-auto renew
+  2. /etc/init.d/nginx reload
+
+Maybe you want to put these 2 commands in the crontab of the root user.
