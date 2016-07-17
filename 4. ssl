@@ -1,0 +1,20 @@
+# SSL
+Using Let's encrypt
+
+We will secure fotocoghe.be
+Run the commands with non-root user with sudo-priveleges.
+
+## Prerequirements
+Install git and bc for cloning the repository
+  1. sudo apt-get install git bc
+
+Make a dir
+  2. sudo mkdir /var/www/letsencrypt
+
+## Install
+  1. sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
+
+
+## Obtain a certificate
+  1. cd /opt/letsencrypt
+  2. sudo ./letsencrypt-auto certonly -a webroot --webroot-path=/var/www/letsencrypt -d fotocoghe.be

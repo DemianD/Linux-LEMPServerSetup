@@ -36,14 +36,13 @@ chdir = /
 
 <pre><code>
 server {
-    listen 443;
+    listen 443 ssl;
 
     root /home/fotocoghe/public;
     index index.php index.html index.htm;
 
     server_name fotocoghe.be www.fotocoghe.be;
 
-    # to do
     ssl_certificate /etc/letsencrypt/live/www.fotocoghe.be/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/www.fotocoghe.be/privkey.pem;
 
@@ -66,9 +65,23 @@ server {
 }
 
 server {
+
     listen 80;
+
+    root /home/fotocoghe/public;
+
     server_name fotocoghe.be www.fotocoghe.be;
-    return 301 https://$host$request_uri;
+
+    # This is for SSL, for Let's encrypt
+    location /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root         /var/www/letsencrypt;
+    }
+
+    # Redirect all requests
+    location / {
+        return 301 https://$host$request_uri;
+    }
 }
 </code></pre>
 
