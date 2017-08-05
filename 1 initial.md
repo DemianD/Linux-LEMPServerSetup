@@ -3,6 +3,9 @@
 ## Before
 Before this, the server is up to date with all the latest versions.
 
+- sudo apt-get update -y
+- sudo apt-get upgrade -y
+
 ## Setup (execute everything as root)
 
 Add a user
@@ -20,6 +23,8 @@ Do not permit root login, and change default port number of SSH
   It's recommenced to check if you can login with 'demian', before you shutdown this SSH session;
 
 ## Firewall (exit root, and login as demian)
+
+- sudo apt-get install ufw
 
 First let's setup some defaults:
   1. sudo ufw default deny incoming
