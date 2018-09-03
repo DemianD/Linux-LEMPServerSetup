@@ -9,7 +9,7 @@ Before this, the server is up to date with all the latest versions.
 ## Setup (execute everything as root)
 
 Add a user
-  1. adduser demian
+  1. adduser -m demian
 
 Add this user to the sudo group
   1. gpasswd -a demian sudo
