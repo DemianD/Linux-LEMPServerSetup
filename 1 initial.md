@@ -8,6 +8,12 @@ Before this, the server is up to date with all the latest versions.
 - sudo apt full-upgrade  # Installs updates; may also remove some packages, if needed
 - sudo apt autoremove    # Removes any old packages that are no longer needed
 
+## Timezone
+
+```
+sudo timedatectl set-timezone Europe/Brussels
+```
+
 ## Setup (execute everything as root)
 
 Add a user
