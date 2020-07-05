@@ -17,7 +17,7 @@ sudo timedatectl set-timezone Europe/Brussels
 ## Setup (execute everything as root)
 
 Add a user
-  1. adduser -m demian
+  1. adduser demian
 
 Add this user to the sudo group
   1. gpasswd -a demian sudo
