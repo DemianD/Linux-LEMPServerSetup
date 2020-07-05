@@ -23,7 +23,7 @@ Add this user to the sudo group
   1. gpasswd -a demian sudo
 
 Do not permit root login, and change default port number of SSH
-  1. nano /etc/ssh/sshd_config
+  1. vim /etc/ssh/sshd_config
   2. PermitRootLogin no
   3. port 47222
   4. service ssh restart
